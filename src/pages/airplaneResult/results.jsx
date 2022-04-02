@@ -20,7 +20,7 @@ const TopRow = styled.div`
   justify-content: space-between;
 `;
 
-export const Results = ({ data }) => {
+export const Results = ({ data, filters }) => {
   const orderOptions = [
     {
       key: 1,
@@ -35,7 +35,6 @@ export const Results = ({ data }) => {
   ];
 
   //states
-  const [filters, setFilters] = useState([]);
   const [orderOption, setOrderOption] = useState(orderOptions[0]);
   const [sortedData, setSortedData] = useState(
     sortData(data?.pricedItineraries, orderOptions[0]?.value)
