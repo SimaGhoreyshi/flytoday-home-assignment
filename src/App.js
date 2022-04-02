@@ -1,24 +1,19 @@
-import logo from './logo.svg';
 import './App.css';
+import { MainLayout } from './components/layouts';
+import { React } from 'react';
+import { GlobalStyle } from './assets';
+import { AirplaneResult } from './pages';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <GlobalStyle />
+      <MainLayout  >
+        {/* caution: normally here would be the router, not a page component itself,
+        but since there's no routing needed I added the component itself */}
+        <AirplaneResult />
+      </MainLayout>
+    </>
   );
 }
 
