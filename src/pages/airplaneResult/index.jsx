@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 import { sampleData } from "../../assets";
 import { Filters } from "./filters";
@@ -23,17 +24,20 @@ const Content = styled.section`
   grid-template-columns: 23% 77%;
   grid-gap: 1%;
   //space to top as much as the height of the header
-  margin: 8rem auto 0;
+  /* margin: 8rem auto 0; */
+  margin: 0rem auto 0;
   padding-top: 2rem;
 `;
 
 export const AirplaneResult = () => {
+  const [filters, setFilters] = useState([]);
+
   return (
     <PageContainer className="page">
       <SearchBox />
       <Content>
-        <Filters />
-        <Results data={sampleData}></Results>
+        <Filters setFilters={setFilters} />
+        <Results data={sampleData} filters={filters}></Results>
       </Content>
     </PageContainer>
   );
