@@ -49,6 +49,7 @@ const FilterButton = styled.button`
   display: flex;
   width: 100%;
   justify-content: space-between;
+  cursor: pointer;
 `;
 
 const Title = styled.div`
