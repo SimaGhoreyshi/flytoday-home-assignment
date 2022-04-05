@@ -55,9 +55,7 @@ export const Detail = ({ data }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const obj = data?.originDestinationOptions[0]?.flightSegments[0];
-  useEffect(() => {
-    console.log(isCollapsed);
-  }, [isCollapsed]);
+  useEffect(() => {}, [isCollapsed]);
   return (
     <DetailContainer isCollapsed={isCollapsed}>
       <Left onClick={() => setIsCollapsed(!isCollapsed)}>
