@@ -52,13 +52,13 @@ export const Results = ({ data, filters }) => {
 
   useEffect(() => {
     setSortedData(sortData(data?.pricedItineraries, orderOption?.value));
-  }, [orderOption]);
+  }, [orderOption, data?.pricedItineraries]);
 
   useEffect(() => {
     setSortedData(
       filterData(sortData(data?.pricedItineraries, orderOption?.value), filters)
     );
-  }, [filters]);
+  }, [filters, orderOption, data?.pricedItineraries]);
 
   return (
     <Container>
@@ -256,6 +256,7 @@ const filterData = (data, filters) => {
             }
           });
         }
+        break;
       default:
         break;
     }

@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { css } from "styled-components";
 
 import { colors } from "../../assets";
-import { Anchor, Checkbox, HL, RangeSlider, Span } from "../../components";
+import { Anchor, Checkbox, HL, Span } from "../../components";
 import { toFaNumber } from "../../utils";
 
 const primary = colors.primary;

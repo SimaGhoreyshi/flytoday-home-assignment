@@ -1,4 +1,4 @@
-import moment, { min } from "jalali-moment";
+import moment from "jalali-moment";
 
 export const enDateToWeekDay = (dateStr) => {
   if (dateStr) {

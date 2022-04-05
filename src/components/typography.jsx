@@ -1,7 +1,5 @@
 import styled, { css } from "styled-components";
-import { fontFaces, colors } from "./../assets";
-
-const greyishBrown = colors.greyishBrown;
+import { fontFaces } from "./../assets";
 
 export const Text = css`
   ${fontFaces}

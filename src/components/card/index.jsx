@@ -1,10 +1,7 @@
 import styled from "styled-components";
-import { colors } from "../../assets";
 import { Detail } from "./detail";
 import { Fee } from "./fee";
 import { Gist } from "./gist";
-
-const lightGrey = colors.lightGrey;
 
 const CardContainer = styled.div`
   width: 100%;
