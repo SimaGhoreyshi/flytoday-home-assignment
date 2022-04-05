@@ -65,6 +65,27 @@ export const Filters = ({ filters, setFilters }) => {
   const [stopCollapsed, setStopCollapsed] = useState(false);
   const [classCollapsed, setClassCollapsed] = useState(false);
 
+  const handleFilters = (field, filterClass) => {
+    let temp = { ...filters };
+    if (temp[filterClass]?.includes(field)) {
+      temp = {
+        ...temp,
+        [filterClass]: temp[filterClass]?.filter((item) => item !== field),
+      };
+    } else {
+      temp[filterClass]?.push(field);
+    }
+    setFilters(temp);
+  };
+
+  const eraseFilters = () => {
+    const tempFilters = { ...filters };
+    Object.keys(tempFilters).forEach((key) => {
+      tempFilters[key].length = 0;
+    });
+    setFilters(tempFilters);
+  };
+
   return (
     <Container>
       <ValidationCountdown>
@@ -77,7 +98,7 @@ export const Filters = ({ filters, setFilters }) => {
         <Span size="0.875" color={greyishBrown}>
           فیلترها
         </Span>
-        <Anchor size="0.813" color={primary} onClick={() => setFilters([])}>
+        <Anchor size="0.813" color={primary} onClick={eraseFilters}>
           حذف فیلترها
         </Anchor>
       </Title>
@@ -89,13 +110,25 @@ export const Filters = ({ filters, setFilters }) => {
           <Span bold size="0.875" color={greyishBrown}>
             تعداد توقف
           </Span>
-          <i class={`fa fa-angle-${stopCollapsed ? "up" : "down"}`} />
+          <i className={`fa fa-angle-${stopCollapsed ? "up" : "down"}`} />
         </FilterButton>
         <br />
         <FilterSectionContent collapsed={stopCollapsed}>
-          <Checkbox title="بدون توقف" />
-          <Checkbox title="یک توقف" />
-          <Checkbox title={`بیش از ${toFaNumber(2)} توقف`} />
+          <Checkbox
+            checked={filters?.stop?.includes("noStop")}
+            onChange={() => handleFilters("noStop", "stop")}
+            title="بدون توقف"
+          />
+          <Checkbox
+            checked={filters?.stop?.includes("oneStop")}
+            onChange={() => handleFilters("oneStop", "stop")}
+            title="یک توقف"
+          />
+          <Checkbox
+            checked={filters?.stop?.includes("moreStop")}
+            onChange={() => handleFilters("moreStop", "stop")}
+            title={`بیش از ${toFaNumber(2)} توقف`}
+          />
         </FilterSectionContent>
       </FilterSectionDropdown>
 
@@ -106,11 +139,19 @@ export const Filters = ({ filters, setFilters }) => {
           <Span bold color={greyishBrown}>
             کلاس پروازی
           </Span>
-          <i class={`fa fa-angle-${classCollapsed ? "up" : "down"}`} />
+          <i className={`fa fa-angle-${classCollapsed ? "up" : "down"}`} />
         </FilterButton>
         <FilterSectionContent collapsed={classCollapsed}>
-          <Checkbox title="اکونومی" />
-          <Checkbox title="بیزینس" />
+          <Checkbox
+            checked={filters?.cabinClass?.includes("economy")}
+            onChange={() => handleFilters("economy", "cabinClass")}
+            title="اکونومی"
+          />
+          <Checkbox
+            checked={filters?.cabinClass?.includes("business")}
+            onChange={() => handleFilters("business", "cabinClass")}
+            title="بیزینس"
+          />
         </FilterSectionContent>
       </FilterSectionDropdown>
     </Container>

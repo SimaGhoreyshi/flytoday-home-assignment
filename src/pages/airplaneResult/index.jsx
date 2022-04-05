@@ -30,13 +30,13 @@ const Content = styled.section`
 `;
 
 export const AirplaneResult = () => {
-  const [filters, setFilters] = useState([]);
+  const [filters, setFilters] = useState({ stop: [], cabinClass: [] });
 
   return (
     <PageContainer className="page">
       <SearchBox />
       <Content>
-        <Filters setFilters={setFilters} />
+        <Filters filters={filters} setFilters={setFilters} />
         <Results data={sampleData} filters={filters}></Results>
       </Content>
     </PageContainer>

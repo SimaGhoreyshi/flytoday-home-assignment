@@ -54,7 +54,11 @@ export const Results = ({ data, filters }) => {
     setSortedData(sortData(data?.pricedItineraries, orderOption?.value));
   }, [orderOption]);
 
-  useEffect(() => {}, [filters]);
+  useEffect(() => {
+    setSortedData(
+      filterData(sortData(data?.pricedItineraries, orderOption?.value), filters)
+    );
+  }, [filters]);
 
   return (
     <Container>
@@ -147,8 +151,119 @@ const sortData = (data, sortKey) => {
   return sorted;
 };
 
-// const filterData = (data,filters)=>{
-// filters.forEach(filter=>{
-//   data.filter
-// })
-// }
+const filterData = (data, filters) => {
+  let filteredStop = [];
+  let filteredCabin = [];
+
+  Object.keys(filters)?.forEach((filterKey) => {
+    switch (filterKey) {
+      case "stop":
+        const stopFilters = [...filters?.stop];
+        if (!stopFilters?.length) {
+          filteredStop = [...data];
+          break;
+        } else {
+          stopFilters?.forEach((filter) => {
+            switch (filter) {
+              case "noStop":
+                filteredStop = [
+                  ...filteredStop,
+                  ...data.filter(
+                    (item) =>
+                      item?.originDestinationOptions[0]?.flightSegments[0]
+                        ?.stopQuantity === 0
+                  ),
+                ];
+                break;
+              case "oneStop":
+                filteredStop = [
+                  ...filteredStop,
+                  ...data.filter(
+                    (item) =>
+                      item?.originDestinationOptions[0]?.flightSegments[0]
+                        ?.stopQuantity === 1
+                  ),
+                ];
+                break;
+              case "moreStop":
+                filteredStop = [
+                  ...filteredStop,
+                  ...data.filter(
+                    (item) =>
+                      item?.originDestinationOptions[0]?.flightSegments[0]
+                        ?.stopQuantity >= 2
+                  ),
+                ];
+                break;
+              default:
+                break;
+            }
+          });
+          break;
+        }
+      case "cabinClass":
+        const cabinClassFilters = [...filters?.cabinClass];
+        if (!cabinClassFilters?.length) {
+          filteredCabin = [...data];
+          break;
+        } else {
+          cabinClassFilters.forEach((filter) => {
+            switch (filter) {
+              case "economy":
+                filteredCabin = [
+                  ...filteredCabin,
+                  ...data.filter((item) =>
+                    [
+                      "B",
+                      "O",
+                      "Q",
+                      "N",
+                      "S",
+                      "G",
+                      "V",
+                      "L",
+                      "M",
+                      "K",
+                      "H",
+                      "Y",
+                      "W",
+                      "P",
+                    ].includes(
+                      String(
+                        item?.originDestinationOptions[0]?.flightSegments[0]
+                          ?.cabinClassCode
+                      ).toUpperCase()
+                    )
+                  ),
+                ];
+                break;
+
+              case "business":
+                filteredCabin = [
+                  ...filteredCabin,
+                  ...data.filter((item) =>
+                    ["F", "J", "A", "D", "I", "R"].includes(
+                      String(
+                        item?.originDestinationOptions[0]?.flightSegments[0]
+                          ?.cabinClassCode
+                      ).toUpperCase()
+                    )
+                  ),
+                ];
+                break;
+              default:
+                break;
+            }
+          });
+        }
+      default:
+        break;
+    }
+  });
+
+  return filteredStop.filter((itemStop) =>
+    filteredCabin.some(
+      (itemCabin) => itemCabin.fareSourceCode === itemStop.fareSourceCode
+    )
+  );
+};
