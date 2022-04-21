@@ -1,1 +1,1 @@
-# [deployed on netlify](https://flytoday.netlify.app/).
+# [deployed on netlify](https://flytoday.netlify.app/)
